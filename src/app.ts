@@ -1,16 +1,12 @@
 import * as BABYLON from 'babylonjs';
 import 'babylonjs-loaders';
-import { PopupMenu } from './components/popupMenu';
-import { Plane } from './objects/plane';
-import { IcoSphere } from './objects/icosphere';
-import { Cylinder } from './objects/cylinder';
+import { Cylinder, IcoSphere, Plane } from './objects';
 
 const canvas = document.getElementById("canvas");
 if (!(canvas instanceof HTMLCanvasElement)) throw new Error("Couldn't find a canvas. Aborting the demo")
 
 const engine = new BABYLON.Engine(canvas, true, {});
 const scene = new BABYLON.Scene(engine);
-const popupMenu = new PopupMenu(scene);
 
 function prepareScene() {
 	// Camera

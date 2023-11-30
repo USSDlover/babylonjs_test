@@ -12,6 +12,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitReturns": true,
 		"strict": true,
+		"moduleResolution": "Node"
 	},
 	"include": ["src/app.ts"],
 	"exclude": ["node_modules"]
