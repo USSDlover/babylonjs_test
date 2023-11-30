@@ -5,11 +5,14 @@
 		"baseUrl": "./src",
 		"lib": ["esNext", "dom"],
 		"esModuleInterop": true,
-		"types": ["babylonjs"],
+		"types": [
+			"babylonjs",
+			"babylonjs-gui"
+		],
 		"forceConsistentCasingInFileNames": true,
 		"noImplicitReturns": true,
 		"strict": true,
 	},
-	"include": ["src/app/app.ts"],
+	"include": ["src/app.ts"],
 	"exclude": ["node_modules"]
 }
