@@ -3,13 +3,13 @@ import { PopupMenu } from '../components/popupMenu';
 import { registerAction } from '../utils/utils';
 
 export class IcoSphere {
-    private icoSphere: BABYLON.Mesh;
+    public mesh: BABYLON.Mesh;
     private popupMenu: PopupMenu;
     constructor(private scene: BABYLON.Scene) {
-        this.icoSphere = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {}, scene);
-        this.icoSphere.position.set(-2, 0, 0);
-        this.popupMenu = new PopupMenu(this.icoSphere, this.scene);
-        registerAction(this.scene, this.icoSphere, this.onClick.bind(this));
+        this.mesh = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {}, scene);
+        this.mesh.position.set(-2, 0, 0);
+        this.popupMenu = new PopupMenu(this.mesh, this.scene);
+        registerAction(this.scene, this.mesh, this.onClick.bind(this));
     }
 
     onClick(event: BABYLON.ActionEvent): void {
@@ -20,12 +20,12 @@ export class IcoSphere {
     }
 
     private onIcoSphereDiameterChange = (newVal: number): void => {
-        this.icoSphere.scaling.x = newVal;
-        this.icoSphere.scaling.y = newVal;
-        this.icoSphere.scaling.z = newVal;
+        this.mesh.scaling.x = newVal;
+        this.mesh.scaling.y = newVal;
+        this.mesh.scaling.z = newVal;
     }
     private onIcoSphereSubdivisionChange = (newVal: number): void => {
-        this.icoSphere.dispose();
+        this.mesh.dispose();
         const minSubdivisions = 4; // Minimum number of subdivisions
         const maxSubdivisions = 64; // Maximum number of subdivisions
 
@@ -33,8 +33,8 @@ export class IcoSphere {
         const normalizedValue = Math.round(
             minSubdivisions + (maxSubdivisions - minSubdivisions) * ((newVal - 1) / (10 - 1))
         );
-        this.icoSphere = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {subdivisions: normalizedValue}, this.scene);
-        this.icoSphere.position.set(-2, 0, 0);
+        this.mesh = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {subdivisions: normalizedValue}, this.scene);
+        this.mesh.position.set(-2, 0, 0);
     }
 
 }
