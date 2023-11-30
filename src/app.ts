@@ -48,26 +48,28 @@ function prepareScene() {
 		BABYLON.ActionManager.OnPickTrigger,
 		(event) => {
 			popupMenu.showMenu(event.meshUnderPointer!, {
-				diameter: { min: 0.1, max: 2 },
-				subdivisions: {
-					min: 1,
-					max: 10,
-					onSliderChange: (val) => {
-						icosphere.dispose();
-						const minSubdivisions = 4; // Minimum number of subdivisions
-						const maxSubdivisions = 32; // Maximum number of subdivisions
-
-						// Normalize the slider value to the range [minSubdivisions, maxSubdivisions]
-						const normalizedValue = Math.round(
-							minSubdivisions + (maxSubdivisions - minSubdivisions) * ((val - 1) / (10 - 1))
-						);
-						icosphere = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {subdivisions: normalizedValue}, scene);
-						icosphere.position.set(-2, 0, 0);
-					}
-				},
+				diameter: { min: 0.1, max: 2, onSliderChange: onIcoSphereDiameterChange },
+				subdivisions: {min: 1, max: 10, onSliderChange: onIcoSphereSubdivisionChange},
 			});
 		}
 	));
+	const onIcoSphereDiameterChange = (newVal: number): void => {
+		icosphere.scaling.x = newVal;
+		icosphere.scaling.y = newVal;
+		icosphere.scaling.z = newVal;
+	}
+	const onIcoSphereSubdivisionChange = (newVal: number): void => {
+		icosphere.dispose();
+		const minSubdivisions = 4; // Minimum number of subdivisions
+		const maxSubdivisions = 64; // Maximum number of subdivisions
+
+		// Normalize the slider value to the range [minSubdivisions, maxSubdivisions]
+		const normalizedValue = Math.round(
+			minSubdivisions + (maxSubdivisions - minSubdivisions) * ((newVal - 1) / (10 - 1))
+		);
+		icosphere = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {subdivisions: normalizedValue}, scene);
+		icosphere.position.set(-2, 0, 0);
+	}
 
 	const cylinder = BABYLON.MeshBuilder.CreateCylinder("Cylinder", {}, scene);
 	cylinder.position.set(2, 0, 0);
