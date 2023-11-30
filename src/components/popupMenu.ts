@@ -1,4 +1,4 @@
-import { AdvancedDynamicTexture, Button, Control, StackPanel, Slider } from 'babylonjs-gui';
+import { AdvancedDynamicTexture, Control, StackPanel } from 'babylonjs-gui';
 import * as BABYLON from 'babylonjs';
 import { getSlider } from '../utils/utils';
 
