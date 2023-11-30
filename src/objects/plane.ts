@@ -19,15 +19,21 @@ export class Plane {
                 this.popupMenu.showMenu({
                     width: {
                         min: 0.1,
-                        max: 2
+                        max: 2,
+                        onSliderChange: newVal => {
+                            this.plane.scaling.x = newVal;
+                            this.plane.scaling.y = newVal;
+                        }
                     },
                     height: {
                         min: 0.1,
-                        max: 2
+                        max: 2,
+                        onSliderChange: newVal => this.plane.scaling.x = newVal
                     },
                     depth: {
                         min: 0.1,
-                        max: 2
+                        max: 2,
+                        onSliderChange: newVal => this.plane.scaling.x = newVal
                     },
                 }, event);
             }

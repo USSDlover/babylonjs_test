@@ -5,7 +5,7 @@ import { getSlider } from '../utils/utils';
 interface SliderOption {
     min: number;
     max: number;
-    onSliderChange?: (newVal: number) => void
+    onSliderChange: (newVal: number) => void
 }
 
 export interface SlidersOptions {
@@ -51,14 +51,7 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            });
-            widthSlider.onValueChangedObservable.add(val => {
-                if (slidersOptions.width?.onSliderChange) {
-                    slidersOptions.width?.onSliderChange(val)
-                } else {
-                    this.node.scaling.x = val;
-                }
-            });
+            }, slidersOptions.width?.onSliderChange);
             Control.AddHeader(widthSlider, 'Control the width', '10px', { isHorizontal: true, controlFirst: true });
             widthSlider.top = this.node.position.y;
             widthSlider.left = this.node.position.x;
@@ -72,21 +65,14 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            });
-            heightSlider.onValueChangedObservable.add(val => {
-                if (slidersOptions.height?.onSliderChange) {
-                    slidersOptions.height.onSliderChange(val)
-                } else {
-                    this.node.scaling.y = val;
-                }
-            });
+            }, slidersOptions.height?.onSliderChange);
             if (event) {
                 heightSlider.top = event.pointerY;
                 heightSlider.left = event.pointerX;
             }
             this.advancedTexture.addControl(heightSlider);
         }
-        /*if (slidersOptions?.depth) {
+        if (slidersOptions?.depth) {
             const depthSlider = getSlider({
                 name: 'depthSlider',
                 min: slidersOptions.depth.min,
@@ -94,15 +80,8 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            });
-            depthSlider.onValueChangedObservable.add(val => {
-                if (slidersOptions.depth?.onSliderChange) {
-                    slidersOptions.depth?.onSliderChange(val);
-                } else {
-                    this.node.scaling.z = val / this.node.scaling.y;
-                }
-            });
-            panel.addControl(depthSlider);
+            }, slidersOptions.depth?.onSliderChange);
+            this.advancedTexture.addControl(depthSlider);
         }
         if (slidersOptions?.diameter) {
             const widthSlider = getSlider({
@@ -112,16 +91,8 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            });
-            widthSlider.onValueChangedObservable.add(val => {
-                if (slidersOptions.diameter?.onSliderChange) {
-                    slidersOptions.diameter.onSliderChange(val);
-                } else {
-                    this.node.scaling.x = val;
-                    this.node.scaling.z = val;
-                }
-            });
-            panel.addControl(widthSlider);
+            }, slidersOptions.diameter?.onSliderChange);
+            this.advancedTexture.addControl(widthSlider);
         }
         if (slidersOptions?.subdivisions) {
             const widthSlider = getSlider({
@@ -131,13 +102,8 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            });
-            widthSlider.onValueChangedObservable.add(val => {
-                if (slidersOptions.subdivisions?.onSliderChange) {
-                    slidersOptions.subdivisions?.onSliderChange(val);
-                }
-            });
-            panel.addControl(widthSlider);
-        }*/
+            }, slidersOptions.subdivisions?.onSliderChange);
+            this.advancedTexture.addControl(widthSlider);
+        }
     }
 }

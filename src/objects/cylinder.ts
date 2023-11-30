@@ -17,11 +17,17 @@ export class Cylinder {
         this.popupMenu.showMenu({
             height: {
                 min: 0.1,
-                max: 2
+                max: 2,
+                onSliderChange: newVal => {
+                    this.cylinder.scaling.y = newVal
+                }
             },
             diameter: {
                 min: 0.1,
-                max: 2
+                max: 2,
+                onSliderChange: newVal => {
+                    this.cylinder.scaling.y = newVal
+                }
             }
         }, event);
     }

@@ -8,13 +8,14 @@ export function getSlider(options: {
     value: number;
     height: string;
     width: string;
-}): Slider {
+}, onSliderChange: (event: number) => void): Slider {
     const slider = new Slider('widthSlider');
     slider.minimum = options.min;
     slider.maximum = options.max;
     slider.value = options.value;
     slider.height = options.height;
     slider.width = options.width;
+    slider.onValueChangedObservable.add(onSliderChange);
     return  slider;
 }
 
