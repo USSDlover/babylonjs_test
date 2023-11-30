@@ -1,6 +1,6 @@
-import { AdvancedDynamicTexture, Control, StackPanel } from 'babylonjs-gui';
+import { AdvancedDynamicTexture, Control } from 'babylonjs-gui';
 import * as BABYLON from 'babylonjs';
-import { drawPanel, getSlider } from '../utils/utils';
+import { getSlider } from '../utils/utils';
 
 interface SliderOption {
     min: number;
