@@ -24,15 +24,69 @@ function prepareScene() {
 	plane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(
 		BABYLON.ActionManager.OnPickTrigger,
 		(event) => {
-			popupMenu.showMenu(event.meshUnderPointer!);
+			popupMenu.showMenu(event.meshUnderPointer!, {
+				width: {
+					min: 0.1,
+					max: 2
+				},
+				height: {
+					min: 0.1,
+					max: 2
+				},
+				depth: {
+					min: 0.1,
+					max: 2
+				},
+			});
 		}
-	))
+	));
 
-	const icosphere = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {}, scene);
+	let icosphere = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {}, scene);
 	icosphere.position.set(-2, 0, 0);
+	icosphere.actionManager = new BABYLON.ActionManager(scene);
+	icosphere.actionManager.registerAction(new BABYLON.ExecuteCodeAction(
+		BABYLON.ActionManager.OnPickTrigger,
+		(event) => {
+			popupMenu.showMenu(event.meshUnderPointer!, {
+				diameter: { min: 0.1, max: 2 },
+				subdivisions: {
+					min: 1,
+					max: 10,
+					onSliderChange: (val) => {
+						icosphere.dispose();
+						const minSubdivisions = 4; // Minimum number of subdivisions
+						const maxSubdivisions = 32; // Maximum number of subdivisions
+
+						// Normalize the slider value to the range [minSubdivisions, maxSubdivisions]
+						const normalizedValue = Math.round(
+							minSubdivisions + (maxSubdivisions - minSubdivisions) * ((val - 1) / (10 - 1))
+						);
+						icosphere = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {subdivisions: normalizedValue}, scene);
+						icosphere.position.set(-2, 0, 0);
+					}
+				},
+			});
+		}
+	));
 
 	const cylinder = BABYLON.MeshBuilder.CreateCylinder("Cylinder", {}, scene);
 	cylinder.position.set(2, 0, 0);
+	cylinder.actionManager = new BABYLON.ActionManager(scene);
+	cylinder.actionManager.registerAction(new BABYLON.ExecuteCodeAction(
+		BABYLON.ActionManager.OnPickTrigger,
+		(event) => {
+			popupMenu.showMenu(event.meshUnderPointer!, {
+				height: {
+					min: 0.1,
+					max: 2
+				},
+				diameter: {
+					min: 0.1,
+					max: 2
+				}
+			});
+		}
+	));
 }
 
 prepareScene();
