@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"outDir": "commonjs",
+		"target": "esNext",
+		"baseUrl": "./src",
+		"lib": ["esNext", "dom"],
+		"esModuleInterop": true,
+		"types": ["babylonjs"],
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitReturns": true,
+		"strict": true,
+	},
+	"include": ["src/app/app.ts"],
+	"exclude": ["node_modules"]
+}
