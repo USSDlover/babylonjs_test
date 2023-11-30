@@ -117,7 +117,7 @@ export class PopupMenu {
                     slidersOptions.diameter.onSliderChange(val);
                 } else {
                     node.scaling.x = val;
-                    node.scaling.z = val / node.scaling.y;
+                    node.scaling.z = val;
                 }
             });
             panel.addControl(widthSlider);
