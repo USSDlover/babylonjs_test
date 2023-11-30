@@ -1,6 +1,6 @@
 import { AdvancedDynamicTexture, Control, StackPanel } from 'babylonjs-gui';
 import * as BABYLON from 'babylonjs';
-import { getSlider } from '../utils/utils';
+import { drawPanel, getSlider } from '../utils/utils';
 
 interface SliderOption {
     min: number;
@@ -8,7 +8,7 @@ interface SliderOption {
     onSliderChange?: (newVal: number) => void
 }
 
-interface SlidersOptions {
+export interface SlidersOptions {
     width?: SliderOption,
     height?: SliderOption,
     diameter?: SliderOption,
@@ -19,36 +19,30 @@ interface SlidersOptions {
 export class PopupMenu {
     private advancedTexture: AdvancedDynamicTexture;
 
-    constructor(private scene: BABYLON.Scene) {
+    constructor(
+        public node: BABYLON.AbstractMesh,
+        public scene: BABYLON.Scene,
+        ) {
         this.advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI('UI');
     }
 
+
+
     showMenu(
-        node: BABYLON.AbstractMesh,
-        slidersOptions: SlidersOptions
+        slidersOptions: SlidersOptions,
+        clickEvent: BABYLON.ActionEvent
     ): void {
-        const panel = new StackPanel();
-        panel.width = '220px';
-        panel.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
-        panel.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-
+        // drawPanel(this.node, this.advancedTexture);
         if (slidersOptions) {
-            this.addSliders(node, slidersOptions, panel);
+            this.addSliders(slidersOptions, clickEvent);
         }
-
-        this.advancedTexture.addControl(panel);
-
-        // @ts-ignore
-        const screenCoordinates = BABYLON.Vector3.Project(node.position, BABYLON.Matrix.Identity(), this.scene.getTransformMatrix(), this.scene.activeCamera!.viewport.toGlobal(this.scene.getEngine()));
-        panel.top = `${screenCoordinates.y}px`;
-        panel.left = `${screenCoordinates.x}px`;
     }
 
     hideMenu(): void {
         this.advancedTexture.dispose();
     }
 
-    private addSliders(node: BABYLON.AbstractMesh, slidersOptions: SlidersOptions, panel: StackPanel): void {
+    private addSliders(slidersOptions: SlidersOptions, event?: BABYLON.ActionEvent): void {
         if (slidersOptions?.width) {
             const widthSlider = getSlider({
                 name: 'widthSlider',
@@ -62,10 +56,13 @@ export class PopupMenu {
                 if (slidersOptions.width?.onSliderChange) {
                     slidersOptions.width?.onSliderChange(val)
                 } else {
-                    node.scaling.x = val;
+                    this.node.scaling.x = val;
                 }
             });
-            panel.addControl(widthSlider);
+            Control.AddHeader(widthSlider, 'Control the width', '10px', { isHorizontal: true, controlFirst: true });
+            widthSlider.top = this.node.position.y;
+            widthSlider.left = this.node.position.x;
+            this.advancedTexture.addControl(widthSlider);
         }
         if (slidersOptions?.height) {
             const heightSlider = getSlider({
@@ -80,12 +77,16 @@ export class PopupMenu {
                 if (slidersOptions.height?.onSliderChange) {
                     slidersOptions.height.onSliderChange(val)
                 } else {
-                    node.scaling.y = val;
+                    this.node.scaling.y = val;
                 }
             });
-            panel.addControl(heightSlider);
+            if (event) {
+                heightSlider.top = event.pointerY;
+                heightSlider.left = event.pointerX;
+            }
+            this.advancedTexture.addControl(heightSlider);
         }
-        if (slidersOptions?.depth) {
+        /*if (slidersOptions?.depth) {
             const depthSlider = getSlider({
                 name: 'depthSlider',
                 min: slidersOptions.depth.min,
@@ -98,7 +99,7 @@ export class PopupMenu {
                 if (slidersOptions.depth?.onSliderChange) {
                     slidersOptions.depth?.onSliderChange(val);
                 } else {
-                    node.scaling.z = val / node.scaling.y;
+                    this.node.scaling.z = val / this.node.scaling.y;
                 }
             });
             panel.addControl(depthSlider);
@@ -116,8 +117,8 @@ export class PopupMenu {
                 if (slidersOptions.diameter?.onSliderChange) {
                     slidersOptions.diameter.onSliderChange(val);
                 } else {
-                    node.scaling.x = val;
-                    node.scaling.z = val;
+                    this.node.scaling.x = val;
+                    this.node.scaling.z = val;
                 }
             });
             panel.addControl(widthSlider);
@@ -137,6 +138,6 @@ export class PopupMenu {
                 }
             });
             panel.addControl(widthSlider);
-        }
+        }*/
     }
 }

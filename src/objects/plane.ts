@@ -5,9 +5,9 @@ export class Plane {
     private plane: BABYLON.Mesh;
     private popupMenu: PopupMenu;
     constructor(private scene: BABYLON.Scene) {
-        this.popupMenu = new PopupMenu(this.scene);
         this.plane = BABYLON.MeshBuilder.CreateBox("Plane", {}, scene);
         this.plane.rotationQuaternion = BABYLON.Quaternion.FromEulerAngles(0, Math.PI, 0);
+        this.popupMenu = new PopupMenu(this.plane, this.scene);
         this.registerAction();
     }
 
@@ -16,7 +16,7 @@ export class Plane {
         this.plane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(
             BABYLON.ActionManager.OnPickTrigger,
             (event) => {
-                this.popupMenu.showMenu(event.meshUnderPointer!, {
+                this.popupMenu.showMenu({
                     width: {
                         min: 0.1,
                         max: 2
@@ -29,7 +29,7 @@ export class Plane {
                         min: 0.1,
                         max: 2
                     },
-                });
+                }, event);
             }
         ));
     }
