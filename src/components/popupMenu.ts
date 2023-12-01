@@ -1,5 +1,5 @@
-import { AdvancedDynamicTexture, StackPanel } from 'babylonjs-gui';
-import { drawPanel, getSlider } from '../utils/utils';
+import { AdvancedDynamicTexture, Grid } from 'babylonjs-gui';
+import { drawPanel, getHeaderTextControl, getSlider } from '../utils/utils';
 
 interface SliderOption {
     min: number;
@@ -16,10 +16,9 @@ export interface SlidersOptions {
 }
 
 export class PopupMenu {
-    private panel?: StackPanel;
+    private panel?: Grid;
 
     constructor() {}
-
 
     showMenu(
         slidersOptions: SlidersOptions,
@@ -37,6 +36,9 @@ export class PopupMenu {
 
     private addSliders(slidersOptions: SlidersOptions): void {
         if (slidersOptions?.width) {
+            const label = getHeaderTextControl('Width Control');
+            this.panel?.addRowDefinition(55, true);
+            this.panel?.addControl(label,0 , 0);
             const widthSlider = getSlider({
                 name: 'widthSlider',
                 min: slidersOptions.width.min,
@@ -45,9 +47,12 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.width?.onSliderChange);
-            this.panel?.addControl(widthSlider);
+            this.panel?.addControl(widthSlider, 0, 1);
         }
         if (slidersOptions?.height) {
+            const label = getHeaderTextControl('Height Control');
+            this.panel?.addRowDefinition(55, true);
+            this.panel?.addControl(label,this.panel?.rowCount - 1 , 0);
             const heightSlider = getSlider({
                 name: 'heightSlider',
                 min: slidersOptions.height.min,
@@ -56,9 +61,12 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.height?.onSliderChange);
-            this.panel?.addControl(heightSlider);
+            this.panel?.addControl(heightSlider,this.panel?.rowCount - 1 , 1);
         }
         if (slidersOptions?.depth) {
+            const label = getHeaderTextControl('Depth Control');
+            this.panel?.addRowDefinition(55, true);
+            this.panel?.addControl(label,this.panel?.rowCount - 1 , 0);
             const depthSlider = getSlider({
                 name: 'depthSlider',
                 min: slidersOptions.depth.min,
@@ -67,9 +75,12 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.depth?.onSliderChange);
-            this.panel?.addControl(depthSlider);
+            this.panel?.addControl(depthSlider,this.panel?.rowCount - 1 , 1);
         }
         if (slidersOptions?.diameter) {
+            const label = getHeaderTextControl('Diameter Control');
+            this.panel?.addRowDefinition(55, true);
+            this.panel?.addControl(label,this.panel?.rowCount - 1 , 0);
             const diameterSlider = getSlider({
                 name: 'diameterSlider',
                 min: slidersOptions.diameter.min,
@@ -78,9 +89,12 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.diameter?.onSliderChange);
-            this.panel?.addControl(diameterSlider);
+            this.panel?.addControl(diameterSlider,this.panel?.rowCount - 1 , 1);
         }
         if (slidersOptions?.subdivisions) {
+            const label = getHeaderTextControl('Subdivisions Control');
+            this.panel?.addRowDefinition(55, true);
+            this.panel?.addControl(label,this.panel?.rowCount - 1 , 0);
             const subdivisionSlider = getSlider({
                 name: 'diameterSlider',
                 min: slidersOptions.subdivisions.min,
@@ -89,7 +103,7 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.subdivisions?.onSliderChange);
-            this.panel?.addControl(subdivisionSlider);
+            this.panel?.addControl(subdivisionSlider,this.panel?.rowCount - 1 , 1);
         }
     }
 }

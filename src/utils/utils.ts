@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import { AdvancedDynamicTexture, Slider, StackPanel, Control, TextBlock } from 'babylonjs-gui';
+import { AdvancedDynamicTexture, Slider, Grid, Control, TextBlock } from 'babylonjs-gui';
 
 export function getSlider(options: {
     name: string;
@@ -19,15 +19,16 @@ export function getSlider(options: {
     return  slider;
 }
 
-export function drawPanel(base: AdvancedDynamicTexture): StackPanel {
-    const panel = new StackPanel();
+export function drawPanel(base: AdvancedDynamicTexture): Grid {
+    const panel = new Grid();
 
     panel.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
     panel.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
-    panel.paddingTopInPixels = 125;
-    panel.paddingRightInPixels = 50
 
-    panel.width = '270px';
+    panel.addColumnDefinition(0.75);
+    panel.addColumnDefinition(1);
+
+    panel.adaptWidthToChildren = true;
     panel.height = '270px';
     panel.background = 'gray';
 
