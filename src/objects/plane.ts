@@ -22,14 +22,12 @@ export class Plane {
                     width: {
                         min: 0.1,
                         max: 2,
-                        onSliderChange: newVal => {
-                            this.plane.scaling.y = newVal;
-                        }
+                        onSliderChange: newVal => this.plane.scaling.x = newVal
                     },
                     height: {
                         min: 0.1,
                         max: 2,
-                        onSliderChange: newVal => this.plane.scaling.x = newVal
+                        onSliderChange: newVal => this.plane.scaling.y = newVal
                     },
                     depth: {
                         min: 0.1,
