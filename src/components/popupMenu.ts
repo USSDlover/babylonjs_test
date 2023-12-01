@@ -92,7 +92,7 @@ export class PopupMenu {
             this.panel?.addControl(diameterSlider,this.panel?.rowCount - 1 , 1);
         }
         if (slidersOptions?.subdivisions) {
-            const label = getHeaderTextControl('Subdivisions Control');
+            const label = getHeaderTextControl('Subdivisions');
             this.panel?.addRowDefinition(55, true);
             this.panel?.addControl(label,this.panel?.rowCount - 1 , 0);
             const subdivisionSlider = getSlider({
