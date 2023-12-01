@@ -27,7 +27,7 @@ function prepareScene() {
 
 	// Apply animation
 	icoSphere.mesh.position.y = 5;
-	bounceAnimation(scene, icoSphere.mesh, 5, 1300);
+	bounceAnimation(scene, icoSphere.mesh, 5, 3500);
 }
 
 prepareScene();
