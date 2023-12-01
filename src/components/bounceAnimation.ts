@@ -2,7 +2,7 @@ import * as BABYLON from 'babylonjs';
 
 function generateKeys(duration: number, amplitude: number, numBounces = 3) {
     // Calculate the time for each bounce
-    const bounceTime = duration / (numBounces * 2);
+    const bounceTime = duration / numBounces;
 
     // Define keyframes for each bounce with decreasing amplitude
     const keys = [];
@@ -24,14 +24,8 @@ function generateKeys(duration: number, amplitude: number, numBounces = 3) {
 export function bounceAnimation(scene: BABYLON.Scene, node: BABYLON.AbstractMesh, amplitude: number, duration: number) {
     const animationBox = new BABYLON.Animation("bounceAnimation", "position.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
 
-    const keys = generateKeys(duration, amplitude, 5);
+    const keys = generateKeys((duration / 100 * 2.963), amplitude, 5);
     animationBox.setKeys(keys);
 
-    const animationGroup = new BABYLON.AnimationGroup("BouncingAnimationGroup");
-    animationGroup.addTargetedAnimation(animationBox, node);
     scene.beginDirectAnimation(node, [animationBox], 0, duration, false);
-    setTimeout(() => {
-        animationGroup.stop();
-        animationGroup.dispose();
-    }, duration);
 }
