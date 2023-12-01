@@ -19,14 +19,15 @@ export class Cylinder {
                 min: 0.1,
                 max: 2,
                 onSliderChange: newVal => {
-                    this.cylinder.scaling.y = newVal
+                    this.cylinder.scaling.y = newVal;
                 }
             },
             diameter: {
                 min: 0.1,
                 max: 2,
                 onSliderChange: newVal => {
-                    this.cylinder.scaling.y = newVal
+                    this.cylinder.scaling.x = newVal;
+                    this.cylinder.scaling.z = newVal;
                 }
             }
         }, this.uiPane);

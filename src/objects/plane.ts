@@ -23,7 +23,6 @@ export class Plane {
                         min: 0.1,
                         max: 2,
                         onSliderChange: newVal => {
-                            this.plane.scaling.x = newVal;
                             this.plane.scaling.y = newVal;
                         }
                     },
@@ -35,7 +34,7 @@ export class Plane {
                     depth: {
                         min: 0.1,
                         max: 2,
-                        onSliderChange: newVal => this.plane.scaling.x = newVal
+                        onSliderChange: newVal => this.plane.scaling.z = newVal
                     },
                 }, this.uiPane);
             }
