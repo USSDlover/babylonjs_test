@@ -24,9 +24,11 @@ export function drawPanel(base: AdvancedDynamicTexture): StackPanel {
 
     panel.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
     panel.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    panel.paddingTopInPixels = 125;
+    panel.paddingRightInPixels = 50
 
-    panel.width = '220px';
-    panel.height = '150px';
+    panel.width = '270px';
+    panel.height = '270px';
     panel.background = 'gray';
 
     base.addControl(panel);
