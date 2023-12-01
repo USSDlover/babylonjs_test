@@ -46,7 +46,10 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            }, slidersOptions.width?.onSliderChange);
+            }, newVal => {
+                slidersOptions.width?.onSliderChange(newVal);
+                label.text = `Width: ${newVal.toFixed(2)}`;
+            });
             this.panel?.addControl(widthSlider, 0, 1);
         }
         if (slidersOptions?.height) {
@@ -60,7 +63,10 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            }, slidersOptions.height?.onSliderChange);
+            },  newVal => {
+                slidersOptions.height?.onSliderChange(newVal);
+                label.text = `Height: ${newVal.toFixed(2)}`;
+            });
             this.panel?.addControl(heightSlider,this.panel?.rowCount - 1 , 1);
         }
         if (slidersOptions?.depth) {
@@ -74,7 +80,10 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            }, slidersOptions.depth?.onSliderChange);
+            },   newVal => {
+                slidersOptions.depth?.onSliderChange(newVal);
+                label.text = `Depth: ${newVal.toFixed(2)}`;
+            });
             this.panel?.addControl(depthSlider,this.panel?.rowCount - 1 , 1);
         }
         if (slidersOptions?.diameter) {
@@ -88,7 +97,10 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            }, slidersOptions.diameter?.onSliderChange);
+            },  newVal => {
+                slidersOptions.diameter?.onSliderChange(newVal);
+                label.text = `Diameter: ${newVal.toFixed(2)}`;
+            });
             this.panel?.addControl(diameterSlider,this.panel?.rowCount - 1 , 1);
         }
         if (slidersOptions?.subdivisions) {
@@ -102,7 +114,10 @@ export class PopupMenu {
                 value: 0,
                 height: '20px',
                 width: '200px'
-            }, slidersOptions.subdivisions?.onSliderChange);
+            },  newVal => {
+                slidersOptions.subdivisions?.onSliderChange(newVal);
+                label.text = `Subdivisions: ${newVal.toFixed(2)}`;
+            });
             this.panel?.addControl(subdivisionSlider,this.panel?.rowCount - 1 , 1);
         }
     }
