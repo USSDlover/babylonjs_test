@@ -15,7 +15,7 @@ function prepareScene() {
 	camera.attachControl(canvas, true);
 
 	// Light
-	new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0.5, 1, 0.8).normalize(), scene);
+	new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0.5, 2, 1).normalize(), scene);
 
 	// Objects
 	new Plane(scene);
@@ -23,8 +23,8 @@ function prepareScene() {
 	new Cylinder(scene);
 
 	// Apply animation
-	icoSphere.mesh.position.y = 2;
-	bounceAnimation(scene, icoSphere.mesh, 20, 1000);
+	icoSphere.mesh.position.y = 5;
+	bounceAnimation(scene, icoSphere.mesh, 5, 500);
 }
 
 prepareScene();
