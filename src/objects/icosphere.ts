@@ -36,6 +36,7 @@ export class IcoSphere {
         );
         this.mesh = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {subdivisions: normalizedValue}, this.scene);
         this.mesh.position.set(-2, 0, 0);
+        registerAction(this.scene, this.mesh, this.onClick.bind(this));
     }
 
 }
