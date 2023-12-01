@@ -1,6 +1,5 @@
-import { AdvancedDynamicTexture, Control } from 'babylonjs-gui';
-import * as BABYLON from 'babylonjs';
-import { getSlider } from '../utils/utils';
+import { AdvancedDynamicTexture, StackPanel } from 'babylonjs-gui';
+import { drawPanel, getSlider } from '../utils/utils';
 
 interface SliderOption {
     min: number;
@@ -17,32 +16,26 @@ export interface SlidersOptions {
 }
 
 export class PopupMenu {
-    private advancedTexture: AdvancedDynamicTexture;
+    private panel?: StackPanel;
 
-    constructor(
-        public node: BABYLON.AbstractMesh,
-        public scene: BABYLON.Scene,
-        ) {
-        this.advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI('UI');
-    }
-
+    constructor() {}
 
 
     showMenu(
         slidersOptions: SlidersOptions,
-        clickEvent: BABYLON.ActionEvent
+        uiPane: AdvancedDynamicTexture
     ): void {
-        // drawPanel(this.node, this.advancedTexture);
+        this.panel = drawPanel(uiPane);
         if (slidersOptions) {
-            this.addSliders(slidersOptions, clickEvent);
+            this.addSliders(slidersOptions);
         }
     }
 
     hideMenu(): void {
-        this.advancedTexture.dispose();
+        this.panel?.dispose();
     }
 
-    private addSliders(slidersOptions: SlidersOptions, event?: BABYLON.ActionEvent): void {
+    private addSliders(slidersOptions: SlidersOptions): void {
         if (slidersOptions?.width) {
             const widthSlider = getSlider({
                 name: 'widthSlider',
@@ -52,10 +45,7 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.width?.onSliderChange);
-            Control.AddHeader(widthSlider, 'Control the width', '10px', { isHorizontal: true, controlFirst: true });
-            widthSlider.top = this.node.position.y;
-            widthSlider.left = this.node.position.x;
-            this.advancedTexture.addControl(widthSlider);
+            this.panel?.addControl(widthSlider);
         }
         if (slidersOptions?.height) {
             const heightSlider = getSlider({
@@ -66,11 +56,7 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.height?.onSliderChange);
-            if (event) {
-                heightSlider.top = event.pointerY;
-                heightSlider.left = event.pointerX;
-            }
-            this.advancedTexture.addControl(heightSlider);
+            this.panel?.addControl(heightSlider);
         }
         if (slidersOptions?.depth) {
             const depthSlider = getSlider({
@@ -81,10 +67,10 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.depth?.onSliderChange);
-            this.advancedTexture.addControl(depthSlider);
+            this.panel?.addControl(depthSlider);
         }
         if (slidersOptions?.diameter) {
-            const widthSlider = getSlider({
+            const diameterSlider = getSlider({
                 name: 'diameterSlider',
                 min: slidersOptions.diameter.min,
                 max: slidersOptions.diameter.max,
@@ -92,10 +78,10 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.diameter?.onSliderChange);
-            this.advancedTexture.addControl(widthSlider);
+            this.panel?.addControl(diameterSlider);
         }
         if (slidersOptions?.subdivisions) {
-            const widthSlider = getSlider({
+            const subdivisionSlider = getSlider({
                 name: 'diameterSlider',
                 min: slidersOptions.subdivisions.min,
                 max: slidersOptions.subdivisions.max,
@@ -103,7 +89,7 @@ export class PopupMenu {
                 height: '20px',
                 width: '200px'
             }, slidersOptions.subdivisions?.onSliderChange);
-            this.advancedTexture.addControl(widthSlider);
+            this.panel?.addControl(subdivisionSlider);
         }
     }
 }

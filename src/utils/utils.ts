@@ -1,5 +1,5 @@
 import * as BABYLON from 'babylonjs';
-import { AdvancedDynamicTexture, Slider, StackPanel } from 'babylonjs-gui';
+import { AdvancedDynamicTexture, Slider, StackPanel, Control, TextBlock } from 'babylonjs-gui';
 
 export function getSlider(options: {
     name: string;
@@ -9,7 +9,7 @@ export function getSlider(options: {
     height: string;
     width: string;
 }, onSliderChange: (event: number) => void): Slider {
-    const slider = new Slider('widthSlider');
+    const slider = new Slider(options.name);
     slider.minimum = options.min;
     slider.maximum = options.max;
     slider.value = options.value;
@@ -19,20 +19,26 @@ export function getSlider(options: {
     return  slider;
 }
 
-export function drawPanel(node: BABYLON.AbstractMesh, base: AdvancedDynamicTexture): StackPanel {
+export function drawPanel(base: AdvancedDynamicTexture): StackPanel {
     const panel = new StackPanel();
+
+    panel.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    panel.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+
     panel.width = '220px';
     panel.height = '150px';
     panel.background = 'gray';
 
-
-    console.log(node.position);
-
-    panel.top = node.position.y;
-    panel.left = node.position.x * 20 ;
-
     base.addControl(panel);
     return panel;
+}
+
+export function getHeaderTextControl(text: string): TextBlock {
+    const header = new TextBlock();
+    header.text = text;
+    header.color = 'white';
+    header.fontSize = 20;
+    return header;
 }
 
 export function registerAction(scene: BABYLON.Scene, object: BABYLON.AbstractMesh, onAction: (event: BABYLON.ActionEvent) => void): void {

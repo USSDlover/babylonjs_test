@@ -1,22 +1,23 @@
 import * as BABYLON from 'babylonjs'
 import { PopupMenu } from '../components/popupMenu';
 import { registerAction } from '../utils/utils';
+import { AdvancedDynamicTexture } from 'babylonjs-gui';
 
 export class IcoSphere {
     public mesh: BABYLON.Mesh;
     private popupMenu: PopupMenu;
-    constructor(private scene: BABYLON.Scene) {
+    constructor(private scene: BABYLON.Scene, private uiPane: AdvancedDynamicTexture) {
         this.mesh = BABYLON.MeshBuilder.CreateIcoSphere("IcoSphere", {}, scene);
         this.mesh.position.set(-2, 0, 0);
-        this.popupMenu = new PopupMenu(this.mesh, this.scene);
+        this.popupMenu = new PopupMenu();
         registerAction(this.scene, this.mesh, this.onClick.bind(this));
     }
 
-    onClick(event: BABYLON.ActionEvent): void {
+    onClick(): void {
         this.popupMenu.showMenu({
             diameter: { min: 0.1, max: 2, onSliderChange: this.onIcoSphereDiameterChange },
             subdivisions: { min: 1, max: 10, onSliderChange: this.onIcoSphereSubdivisionChange },
-        }, event);
+        }, this.uiPane);
     }
 
     private onIcoSphereDiameterChange = (newVal: number): void => {

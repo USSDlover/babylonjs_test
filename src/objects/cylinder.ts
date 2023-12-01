@@ -1,19 +1,19 @@
 import * as BABYLON from 'babylonjs'
 import { PopupMenu } from '../components/popupMenu';
 import { registerAction } from '../utils/utils';
+import { AdvancedDynamicTexture } from 'babylonjs-gui';
 
 export class Cylinder {
     private readonly cylinder: BABYLON.Mesh;
     private popupMenu: PopupMenu;
-    constructor(private scene: BABYLON.Scene) {
+    constructor(private scene: BABYLON.Scene, private uiPane: AdvancedDynamicTexture) {
         this.cylinder = BABYLON.MeshBuilder.CreateCylinder("Cylinder", {}, scene);
         this.cylinder.position.set(2, 0, 0);
-        this.popupMenu = new PopupMenu(this.cylinder, this.scene);
+        this.popupMenu = new PopupMenu();
         registerAction(this.scene, this.cylinder, this.onClick.bind(this));
     }
 
-    private onClick(event: BABYLON.ActionEvent): void {
-        console.log('Object click', event);
+    private onClick(): void {
         this.popupMenu.showMenu({
             height: {
                 min: 0.1,
@@ -29,6 +29,6 @@ export class Cylinder {
                     this.cylinder.scaling.y = newVal
                 }
             }
-        }, event);
+        }, this.uiPane);
     }
 }
